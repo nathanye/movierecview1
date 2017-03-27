@@ -1,4 +1,6 @@
 class MoviesController < ApplicationController
+  before_action :authenticate_user! , only: [:new]
+
   def index
     @movies = Movie.all
   end
@@ -32,7 +34,7 @@ class MoviesController < ApplicationController
     else
       render :edit
     end
-  end  
+  end
 
   def destroy
     @movie = Movie.find(params[:id])
