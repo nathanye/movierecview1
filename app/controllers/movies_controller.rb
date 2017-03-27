@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :authenticate_user! , only: [:new, :create]
+  before_action :authenticate_user! , only: [:new, :create, :edit, :update, :destroy]
 
   def index
     @movies = Movie.all
@@ -11,6 +11,10 @@ class MoviesController < ApplicationController
 
   def edit
     @movie = Movie.find(params[:id])
+
+    if current_user !=@movie.user
+      redirect_to root_path, alert: "操作不被允许！"
+    end
   end
 
   def new
@@ -31,6 +35,10 @@ class MoviesController < ApplicationController
   def update
     @movie = Movie.find(params[:id])
 
+    if current_user != @movie.user
+      redirect_to root_path, alert: "操作不被允许！"
+    end
+
     if @movie.update(movie_params)
       redirect_to movies_path, notice: "更新成功！"
     else
@@ -40,6 +48,11 @@ class MoviesController < ApplicationController
 
   def destroy
     @movie = Movie.find(params[:id])
+
+    if current_user != @movie.user
+      redirect_to root_path, alert: "操作不被允许！"
+    end
+
     @movie.destroy
     redirect_to movies_path, alert: "删除成功！"
   end
