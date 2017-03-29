@@ -16,13 +16,13 @@
         <tr>
           <td>#</td>
           <td><%= link_to(movie.title, movie_path(movie)) %></td>
-          <td><%= movie.description %></td>
+          <td><%= simple_format(movie.description) %></td>
           <td><%= movie.user.email %></td>
           <td>
             <% if current_user && current_user == movie.user %>
               <%= link_to("编辑", edit_movie_path(movie), class: "btn btn-sm btn-default") %>
               <%= link_to("删除", movie_path(movie), class: "btn btn-sm btn-default", method: :delete, data: { confirm: "你确定要删除吗？" }) %>
-            <% end %>  
+            <% end %>
           </td>
         </tr>
       <% end %>
