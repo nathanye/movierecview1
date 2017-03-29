@@ -74,7 +74,7 @@ class MoviesController < ApplicationController
   def find_movie_and_check_permission
     @movie = Movie.find(params[:id])
 
-    if current_user != @Movie.user
+    if current_user != @movie.user
       redirect_to root_path, alert: "操作不被允许！"
     end
   end
